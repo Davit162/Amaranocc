@@ -1,0 +1,79 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.logo_img {
+  padding: 10px;
+}
+
+
+.mainHeader {
+  display: flex;
+}
+
+.teg {
+  padding: 10px;
+}
+
+.btn {
+  text-decoration: none;
+  position: relative;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background: orange;
+  transition: 0.3s;
+}
+
+.btn:hover::after {
+  width: 100%;
+}
+
+.tegs {
+  display: flex;
+}
+
+.iconimput {
+  padding: 10px;
+  display: flex;
+}
+
+.fa {
+  padding: 10px;
+}
+
+.text {
+  padding: 10px;
+  border-radius: 15px;
+}
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  z-index: 10;
+}
+
+.header.scrolled {
+  background: white; 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+}
