@@ -1,5 +1,7 @@
-import Skeleton from "./Skeleton";
 import React, { useEffect, useState } from "react";
+import Skeleton from "./Skeleton";
+import { useMarzStore } from "../store/marzStore";
+import Likes from "./Likes";
 
 interface NkarData {
   src: string;
@@ -10,6 +12,10 @@ interface NkarData {
 export default function Nkar() {
   const [data, setData] = useState<NkarData[] | null>(null);
   const [loading, setLoading] = useState(true);
+  const [columns, setColumns] = useState(3);
+  const [search, setSearch] = useState("");
+
+  const { selected } = useMarzStore();
 
   useEffect(() => {
     const xhr = new XMLHttpRequest();
@@ -21,8 +27,6 @@ export default function Nkar() {
     xhr.onreadystatechange = () => {
       if (xhr.status === 200 && xhr.readyState === 4) {
         const parsed: NkarData[] = JSON.parse(xhr.responseText);
-
-
         setData(parsed);
 
         setTimeout(() => {
@@ -34,23 +38,114 @@ export default function Nkar() {
     xhr.send();
   }, []);
 
+  const filteredData = data?.filter((el) =>
+    (selected.length > 0 ? selected.includes(el.tex) : true) &&
+    el.tex.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
-    <div className="nkarinfo">
-      {loading ? (
-        <>
-          {(data?.length ? data : new Array(3).fill(null)).map((_, i) => (
-            <Skeleton key={i} margin="5px" width="300px" height="300px" />
-          ))}
-        </>
-      ) : (
-        data?.map((el, index) => (
-          <div key={index} className="nkarimg">
-            <img src={el.src} className="img" alt={el.tex} />
-            <p className="namecountry">{el.tex}</p>
-            <p style={{ color: "gray" }}>{el.gin}</p>
-          </div>
-        ))
-      )}
+    <div>
+      <div style={{display:"grid",gridTemplateColumns:"500px 400px"}}>
+        <div style={{ margin: "20px 0" }}>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          style={{
+            padding: "10px",
+            width: "50%",
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+          }}
+        />
+      </div>
+
+      <div style={{display:"flex", marginBottom: "20px", marginLeft: "80%",marginTop:"20px",height:"50px" }}>
+        <button
+          onClick={() => setColumns(2)}
+          style={{
+            padding: "10px 20px",
+            marginRight: "10px",
+            backgroundColor: columns === 2 ? "#b34e0bff" : "#ccc",
+            color: columns === 2 ? "#fff" : "#000",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
+        >
+          2
+        </button>
+        <button
+          onClick={() => setColumns(3)}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: columns === 3 ? "#b34e0bff" : "#ccc",
+            color: columns === 3 ? "#fff" : "#000",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
+        >
+          3
+        </button>
+      </div>
+      </div>
+      <div
+        style={{
+          width: "50vw",
+          display: "grid",
+          gridTemplateColumns: `repeat(${columns}, 1fr)`,
+          gap: "20px",
+        }}
+      >
+        {loading ? (
+          <>
+            {(data?.length ? data : new Array(3).fill(null)).map((_, i) => (
+              <Skeleton key={i} margin="5px" width="300px" height="300px" />
+            ))}
+          </>
+        ) : filteredData && filteredData.length > 0 ? (
+          filteredData.map((el, index) => (
+            <div
+              key={index}
+              style={{
+                border: "1px solid #ddd",
+                borderRadius: "8px",
+                overflow: "hidden",
+                textAlign: "center",
+                backgroundColor: "#f9f9f9",
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  height: "200px",
+                  overflow: "hidden",
+                }}
+              >
+                <img
+                  src={el.src}
+                  alt={el.tex}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    transition: "transform 0.3s",
+                  }}
+                />
+              </div>
+              <p style={{ fontWeight: "bold", margin: "10px 0 5px" }}>
+                {el.tex}
+              </p>
+              <p style={{ color: "gray", marginBottom: "10px" }}>{el.gin}</p>
+              <Likes nkar={el} />
+            </div>
+          ))
+        ) : (
+          <p>Առաջարկներ չեն գտնվել</p>
+        )}
+      </div>
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { auth } from "./firebase";
 import Login from "./pages/mainlogin";
 import Register from "./pages/register";
 import Home from "./pages/Home";
+import Zambyux from "./pages/Zambyux";
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -20,7 +21,7 @@ export default function App() {
     return () => unsubscribe();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <></>;
 
   return (
     <Routes>
@@ -30,6 +31,7 @@ export default function App() {
         element={!user ? <Register /> : <Navigate to="/" />}
       />
       <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
+      <Route path="/zambyux" element={<Zambyux />} />
     </Routes>
   );
 }

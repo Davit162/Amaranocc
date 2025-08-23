@@ -1,13 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Zambyux from "../pages/Zambyux"
 
 export default function IconInput() {
   const navigate = useNavigate();
 
 
 
-  function click() {
-    navigate("/likes")
+    function click() {
+    navigate("/zambyux"); 
   }
 
   return (
@@ -17,9 +18,6 @@ export default function IconInput() {
         <i className="fa fa-user" aria-hidden="true"></i>
         <i className="fa fa-solid fa-basket-shopping" onClick={click}></i>
       </div>
-      <div className="input">
-        <input type="text" placeholder="Search" className="text" />
-      </div>
     </div>
   );
-}
+}  
