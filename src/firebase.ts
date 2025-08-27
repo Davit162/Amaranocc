@@ -3,14 +3,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";  
 
 const firebaseConfig = {
-apiKey: "AIzaSyAJ3Hp7MbirHUKTvT1Vq1_nk7UlXtG3-Fc",
-  authDomain: "amaranoc-206fc.firebaseapp.com",
-  databaseURL: "https://amaranoc-206fc-default-rtdb.firebaseio.com",
-  projectId: "amaranoc-206fc",
-  storageBucket: "amaranoc-206fc.firebasestorage.app",
-  messagingSenderId: "929940257340",
-  appId: "1:929940257340:web:ca3bce4323006e102ca139",
-  measurementId: "G-01FZ7Y7S1Y"
+  apiKey: "AIzaSyD2p8rBHB9aYR-e4rQ_vaj-bRlIiq1iKeo",
+  authDomain: "amaranoctypescript.firebaseapp.com",
+  projectId: "amaranoctypescript",
+  storageBucket: "amaranoctypescript.firebasestorage.app",
+  messagingSenderId: "635003527078",
+  appId: "1:635003527078:web:e3f123b6124cac6c803967",
+  measurementId: "G-LF0T5BHL0R"
 };
 
 const app = initializeApp(firebaseConfig);
